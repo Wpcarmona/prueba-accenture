@@ -1,0 +1,7 @@
+{
+  "name": "prueba-accenture",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
