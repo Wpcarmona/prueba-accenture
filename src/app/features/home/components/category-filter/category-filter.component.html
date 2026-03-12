@@ -1,3 +1,44 @@
-<p>
-  category-filter works!
-</p>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Filtros y orden</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div class="chip-group">
+      <ion-chip
+        [outline]="selectedCategoryId() !== 'all'"
+        (click)="selectFilter('all')"
+      >
+        <ion-label>Todas ({{ countMap()['all'] }})</ion-label>
+      </ion-chip>
+
+      <ion-chip
+        [outline]="selectedCategoryId() !== 'uncategorized'"
+        (click)="selectFilter('uncategorized')"
+      >
+        <ion-label>Sin categoría ({{ countMap()['uncategorized'] }})</ion-label>
+      </ion-chip>
+
+      @for (category of categories(); track category.id) {
+        <ion-chip
+          [outline]="selectedCategoryId() !== category.id"
+          (click)="selectFilter(category.id)"
+        >
+          <ion-label [style.color]="category.color">
+            {{ category.name }} ({{ countMap()[category.id] }})
+          </ion-label>
+        </ion-chip>
+      }
+    </div>
+
+    <ion-segment class="ion-margin-top" [value]="sortBy()" (ionChange)="onSortChange($event)">
+      <ion-segment-button value="recent">
+        <ion-label>Recientes</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="completed">
+        <ion-label>Completadas</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-card-content>
+</ion-card>

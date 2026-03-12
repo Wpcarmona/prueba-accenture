@@ -1,0 +1,13 @@
+.task-done {
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+
+.category-pill {
+  display: inline-flex;
+  margin-top: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}

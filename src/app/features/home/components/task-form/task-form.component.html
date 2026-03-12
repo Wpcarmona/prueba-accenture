@@ -1,3 +1,47 @@
-<p>
-  task-form works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nueva tarea</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="modal-body ion-padding">
+  <ion-item>
+    <ion-label position="stacked">Título</ion-label>
+    <ion-input
+      [value]="title()"
+      (ionInput)="onTitleInput($event)"
+    />
+  </ion-item>
+
+  @if (categoriesEnabled()) {
+    <ion-item>
+      <ion-label position="stacked">Categoría</ion-label>
+      <ion-select
+        interface="popover"
+        [value]="categoryId()"
+        placeholder="Sin categoría"
+        (ionChange)="onCategoryChange($event)"
+      >
+        <ion-select-option [value]="null">Sin categoría</ion-select-option>
+
+        @for (category of categories(); track category.id) {
+          <ion-select-option [value]="category.id">
+            {{ category.name }}
+          </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+  }
+
+  <ion-button
+    expand="block"
+    class="ion-margin-top"
+    [disabled]="!title().trim()"
+    (click)="submit()"
+  >
+    Guardar tarea
+  </ion-button>
+</div>

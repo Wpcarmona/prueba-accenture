@@ -1,20 +1,101 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>To-Do List</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="home-content">
+  <div class="page-stack">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Resumen</ion-card-title>
+      </ion-card-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <ion-card-content>
+        <p>Total: {{ store.totalTasks() }}</p>
+        <p>Pendientes: {{ store.pendingTasks() }}</p>
+        <p>Completadas: {{ store.completedTasks() }}</p>
+        <p>Categorías activas: {{ store.categoriesEnabled() ? 'Sí' : 'No' }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    @if (store.categoriesEnabled()) {
+    <app-category-filter
+      [categories]="store.categoriesSorted()"
+      [selectedCategoryId]="store.selectedCategoryId()"
+      [countMap]="store.categoryCountMap()"
+      [sortBy]="store.sortBy()"
+      (filterChange)="store.setCategoryFilter($event)"
+      (sortChange)="store.setSortBy($event)"
+    />
+
+    <app-category-manager
+      [categories]="store.categoriesSorted()"
+      [countMap]="store.categoryCountMap()"
+      (editCategory)="openEditCategoryModal($event)"
+      (deleteCategory)="store.removeCategory($event)"
+    />
+    }
+
+    <app-task-list
+      [tasks]="store.visibleTasks()"
+      [categories]="store.categoriesSorted()"
+      [categoriesEnabled]="store.categoriesEnabled()"
+      (toggleTask)="store.toggleTask($event)"
+      (removeTask)="store.removeTask($event)"
+    />
   </div>
+
+  @if (store.categoriesEnabled()) {
+  <ion-fab class="main-fab" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="toggleFab()">
+      <ion-icon [name]="fabOpen() ? 'close' : 'add'"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-list side="top" [activated]="fabOpen()">
+      <ion-fab-button color="primary" (click)="openTaskModal()">
+        <ion-icon name="list-outline"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button color="secondary" (click)="openCreateCategoryModal()">
+        <ion-icon name="pricetag-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  } @else {
+  <ion-fab class="main-fab" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openTaskModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  }
+
+  <ion-modal
+    [isOpen]="taskModalOpen()"
+    [keepContentsMounted]="true"
+    (didDismiss)="closeTaskModal()"
+  >
+    <ng-template>
+      <app-task-form
+        [categories]="store.categoriesSorted()"
+        [categoriesEnabled]="store.categoriesEnabled()"
+        (createTask)="handleCreateTask($event)"
+        (close)="closeTaskModal()"
+      />
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal
+    [isOpen]="categoryModalOpen()"
+    [keepContentsMounted]="true"
+    (didDismiss)="closeCategoryModal()"
+  >
+    <ng-template>
+      <app-category-form-modal
+        [category]="editingCategory()"
+        (save)="handleSaveCategory($event)"
+        (close)="closeCategoryModal()"
+      />
+    </ng-template>
+  </ion-modal>
 </ion-content>

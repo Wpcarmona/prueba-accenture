@@ -1,3 +1,35 @@
-<p>
-  category-form-modal works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{ category() ? 'Editar categoría' : 'Nueva categoría' }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="modal-body ion-padding">
+  <ion-item>
+    <ion-label position="stacked">Nombre</ion-label>
+    <ion-input
+      [value]="name()"
+      (ionInput)="onNameInput($event)"
+    />
+  </ion-item>
+
+  <div class="color-block ion-margin-top">
+    <label class="color-label">Color</label>
+    <input type="color" [value]="color()" (input)="onColorInput($event)" />
+  </div>
+
+  <ion-button
+    expand="block"
+    class="ion-margin-top"
+    [disabled]="!name().trim()"
+    (click)="submit()"
+  >
+    Guardar categoría
+  </ion-button>
+</div>

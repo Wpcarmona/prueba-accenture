@@ -1,3 +1,30 @@
-<p>
-  category-manager works!
-</p>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Categorías</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    @if (categories().length === 0) {
+      <p>Aún no hay categorías.</p>
+    } @else {
+      <ion-list>
+        @for (category of categories(); track category.id) {
+          <ion-item>
+            <ion-label>
+              <h2 [style.color]="category.color">{{ category.name }}</h2>
+              <ion-note>{{ countMap()[category.id] }} tarea(s)</ion-note>
+            </ion-label>
+
+            <ion-button fill="clear" (click)="onEdit(category)">
+              Editar
+            </ion-button>
+
+            <ion-button fill="clear" color="danger" (click)="onDelete(category.id)">
+              Eliminar
+            </ion-button>
+          </ion-item>
+        }
+      </ion-list>
+    }
+  </ion-card-content>
+</ion-card>

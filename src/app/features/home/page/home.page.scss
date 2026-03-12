@@ -25,3 +25,25 @@
 #container a {
   text-decoration: none;
 }
+
+:host {
+  display: block;
+}
+
+.home-content {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 16px;
+  --padding-bottom: calc(112px + var(--ion-safe-area-bottom, 0px));
+}
+
+.page-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.main-fab {
+  margin-right: calc(16px + var(--ion-safe-area-right, 0px));
+  margin-bottom: calc(66px + var(--ion-safe-area-bottom, 0px));
+}
