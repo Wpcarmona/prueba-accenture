@@ -1,73 +1,107 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Prueba de Accenture To-Do List</ion-title>
+<ion-header class="home-header">
+  <ion-toolbar class="home-toolbar">
+    <div class="header-shell">
+      <div class="header-copy">
+        <h1>Prueba de Accenture To-Do List</h1>
+        <p>Organiza tareas, categorías y pendientes desde un solo lugar.</p>
+      </div>
+
+      <div class="header-counter">
+        <strong>{{ store.totalTasks() }}</strong>
+        <span>{{ store.totalTasks() === 1 ? 'tarea' : 'tareas' }}</span>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="home-content">
   <div class="page-stack">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Resumen</ion-card-title>
-      </ion-card-header>
-
+    <ion-card class="summary-card">
       <ion-card-content>
-        <p>Total: {{ store.totalTasks() }}</p>
-        <p>Pendientes: {{ store.pendingTasks() }}</p>
-        <p>Completadas: {{ store.completedTasks() }}</p>
-        <p>Categorías activas: {{ store.categoriesEnabled() ? 'Sí' : 'No' }}</p>
+        <div class="summary-head">
+          <div>
+            <span class="summary-eyebrow">Resumen</span>
+            <h2>Estado general</h2>
+          </div>
+
+          <div
+            class="summary-badge"
+            [class.summary-badge--active]="store.categoriesEnabled()"
+          >
+            {{ store.categoriesEnabled() ? 'Categorías activas' : 'Sin categorías' }}
+          </div>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-stat">
+            <span class="summary-stat__label">Total</span>
+            <strong class="summary-stat__value">{{ store.totalTasks() }}</strong>
+          </div>
+
+          <div class="summary-stat">
+            <span class="summary-stat__label">Pendientes</span>
+            <strong class="summary-stat__value">{{ store.pendingTasks() }}</strong>
+          </div>
+
+          <div class="summary-stat">
+            <span class="summary-stat__label">Completadas</span>
+            <strong class="summary-stat__value">{{ store.completedTasks() }}</strong>
+          </div>
+        </div>
       </ion-card-content>
     </ion-card>
 
     @if (store.categoriesEnabled()) {
-    <app-category-filter
-      [categories]="store.categoriesSorted()"
-      [selectedCategoryId]="store.selectedCategoryId()"
-      [countMap]="store.categoryCountMap()"
-      [sortBy]="store.sortBy()"
-      (filterChange)="store.setCategoryFilter($event)"
-      (sortChange)="store.setSortBy($event)"
-    />
+      <app-category-filter
+        [categories]="store.categoriesSorted()"
+        [selectedCategoryId]="store.selectedCategoryId()"
+        [countMap]="store.categoryCountMap()"
+        [sortBy]="store.sortBy()"
+        (filterChange)="store.setCategoryFilter($event)"
+        (sortChange)="store.setSortBy($event)"
+      />
 
-    <app-category-manager
-      [categories]="store.categoriesSorted()"
-      [countMap]="store.categoryCountMap()"
-      (editCategory)="openEditCategoryModal($event)"
-      (deleteCategory)="store.removeCategory($event)"
-    />
+      <app-category-manager
+        [categories]="store.categoriesSorted()"
+        [countMap]="store.categoryCountMap()"
+        (editCategory)="openEditCategoryModal($event)"
+        (deleteCategory)="store.removeCategory($event)"
+      />
     }
 
-    <app-task-list
-      [tasks]="store.visibleTasks()"
-      [categories]="store.categoriesSorted()"
-      [categoriesEnabled]="store.categoriesEnabled()"
-      (toggleTask)="store.toggleTask($event)"
-      (removeTask)="store.removeTask($event)"
-    />
+    <div class="task-list-shell">
+      <app-task-list
+        [tasks]="store.visibleTasks()"
+        [categories]="store.categoriesSorted()"
+        [categoriesEnabled]="store.categoriesEnabled()"
+        (toggleTask)="store.toggleTask($event)"
+        (removeTask)="store.removeTask($event)"
+      />
+    </div>
   </div>
 
   @if (store.categoriesEnabled()) {
-  <ion-fab class="main-fab" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="toggleFab()">
-      <ion-icon [name]="fabOpen() ? 'close' : 'add'"></ion-icon>
-    </ion-fab-button>
-
-    <ion-fab-list side="top" [activated]="fabOpen()">
-      <ion-fab-button color="primary" (click)="openTaskModal()">
-        <ion-icon name="list-outline"></ion-icon>
+    <ion-fab class="main-fab" slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="toggleFab()">
+        <ion-icon [name]="fabOpen() ? 'close' : 'add'"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab-button color="secondary" (click)="openCreateCategoryModal()">
-        <ion-icon name="pricetag-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+      <ion-fab-list side="top" [activated]="fabOpen()">
+        <ion-fab-button color="primary" (click)="openTaskModal()">
+          <ion-icon name="list-outline"></ion-icon>
+        </ion-fab-button>
+
+        <ion-fab-button color="secondary" (click)="openCreateCategoryModal()">
+          <ion-icon name="pricetag-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
   } @else {
-  <ion-fab class="main-fab" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="openTaskModal()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <ion-fab class="main-fab" slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="openTaskModal()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   }
 
   <ion-modal

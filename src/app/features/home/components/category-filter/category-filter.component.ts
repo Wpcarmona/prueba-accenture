@@ -7,15 +7,18 @@ import {
 import { Category } from '../../models/category.model';
 import { TaskSort } from '../../models/task.model';
 import {
-  IonSegmentButton,
-  IonLabel,
   IonCard,
+  IonCardContent,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent,
   IonChip,
+  IonIcon,
+  IonLabel,
   IonSegment,
+  IonSegmentButton,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { optionsOutline } from 'ionicons/icons';
 
 type CategoryFilter = 'all' | 'uncategorized' | string;
 
@@ -32,6 +35,7 @@ type CategoryFilter = 'all' | 'uncategorized' | string;
     IonCard,
     IonSegmentButton,
     IonLabel,
+    IonIcon,
   ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,6 +48,12 @@ export class CategoryFilterComponent {
 
   readonly filterChange = output<CategoryFilter>();
   readonly sortChange = output<TaskSort>();
+
+  constructor() {
+    addIcons({
+      optionsOutline,
+    });
+  }
 
   selectFilter(value: CategoryFilter): void {
     this.filterChange.emit(value);

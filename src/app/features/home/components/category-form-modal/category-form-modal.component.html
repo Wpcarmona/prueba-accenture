@@ -1,35 +1,122 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      {{ category() ? 'Editar categoría' : 'Nueva categoría' }}
-    </ion-title>
+<ion-header class="category-form-header">
+  <ion-toolbar class="category-form-toolbar">
+    <div class="toolbar-content">
+      <div class="title-wrap">
+        <div class="title-icon">
+          <ion-icon name="pricetag-outline" />
+        </div>
 
-    <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Cancelar</ion-button>
-    </ion-buttons>
+        <div class="title-copy">
+          <h1>{{ modalTitle() }}</h1>
+          <p>
+            {{
+              isEdit()
+                ? 'Actualiza el nombre y el color de la categoría'
+                : 'Crea una categoría para organizar tus tareas'
+            }}
+          </p>
+        </div>
+      </div>
+
+      <ion-buttons slot="end">
+        <ion-button
+          fill="clear"
+          class="close-button"
+          (click)="dismiss()"
+          aria-label="Cerrar modal"
+        >
+          <ion-icon slot="icon-only" name="close-outline" />
+        </ion-button>
+      </ion-buttons>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<div class="modal-body ion-padding">
-  <ion-item>
-    <ion-label position="stacked">Nombre</ion-label>
-    <ion-input
-      [value]="name()"
-      (ionInput)="onNameInput($event)"
-    />
-  </ion-item>
+<div class="modal-body">
+  <div class="form-shell">
+    <div class="form-card">
+      <div class="field-group">
+        <label class="field-label">Nombre</label>
 
-  <div class="color-block ion-margin-top">
-    <label class="color-label">Color</label>
-    <input type="color" [value]="color()" (input)="onColorInput($event)" />
+        <ion-item lines="none" class="modern-field">
+          <ion-input
+            class="modern-input"
+            [value]="name()"
+            placeholder="Ej. Trabajo, Personal, Urgente"
+            clearInput
+            (ionInput)="onNameInput($event)"
+          />
+        </ion-item>
+
+        <p class="field-hint">
+          Usa un nombre corto y fácil de identificar.
+        </p>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label-row">
+          <label class="field-label">Color</label>
+
+          <div class="color-preview-pill">
+            <span
+              class="color-preview-pill__dot"
+              [style.background]="color()"
+            ></span>
+            <span>{{ color() }}</span>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-card__top">
+            <label class="native-color-wrap" for="categoryColorInput">
+              <span class="native-color-wrap__label">
+                <ion-icon name="color-palette-outline" />
+                Color personalizado
+              </span>
+
+              <input
+                id="categoryColorInput"
+                type="color"
+                class="native-color-input"
+                [value]="color()"
+                (input)="onColorInput($event)"
+              />
+            </label>
+
+            <div
+              class="selected-color-preview"
+              [style.background]="color()"
+            ></div>
+          </div>
+
+          <div class="preset-colors">
+            @for (preset of presetColors; track preset) {
+              <button
+                type="button"
+                class="preset-color"
+                [class.preset-color--active]="preset === color()"
+                [style.background]="preset"
+                (click)="setPresetColor(preset)"
+                [attr.aria-label]="'Seleccionar color ' + preset"
+              >
+                @if (preset === color()) {
+                  <ion-icon name="checkmark-outline" />
+                }
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <ion-button
+        expand="block"
+        class="save-button"
+        [disabled]="!name().trim()"
+        (click)="submit()"
+      >
+        <ion-icon slot="start" name="checkmark-circle-outline" />
+        {{ isEdit() ? 'Guardar cambios' : 'Guardar categoría' }}
+      </ion-button>
+    </div>
   </div>
-
-  <ion-button
-    expand="block"
-    class="ion-margin-top"
-    [disabled]="!name().trim()"
-    (click)="submit()"
-  >
-    Guardar categoría
-  </ion-button>
 </div>

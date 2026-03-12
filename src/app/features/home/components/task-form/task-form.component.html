@@ -1,47 +1,85 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Nueva tarea</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Cancelar</ion-button>
-    </ion-buttons>
+<ion-header class="task-form-header">
+  <ion-toolbar class="task-form-toolbar">
+    <div class="toolbar-content">
+      <div class="title-wrap">
+        <div class="title-icon">
+          <ion-icon name="sparkles-outline" />
+        </div>
+
+        <div class="title-copy">
+          <h1>Nueva tarea</h1>
+          <p>Crea una tarea y organízala mejor</p>
+        </div>
+      </div>
+
+      <ion-buttons slot="end">
+        <ion-button
+          fill="clear"
+          class="close-button"
+          (click)="dismiss()"
+          aria-label="Cerrar modal"
+        >
+          <ion-icon slot="icon-only" name="close-outline" />
+        </ion-button>
+      </ion-buttons>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<div class="modal-body ion-padding">
-  <ion-item>
-    <ion-label position="stacked">Título</ion-label>
-    <ion-input
-      [value]="title()"
-      (ionInput)="onTitleInput($event)"
-    />
-  </ion-item>
+<div class="modal-body">
+  <div class="form-shell">
+    <div class="form-card">
+      <div class="field-group">
+        <label class="field-label">Título</label>
 
-  @if (categoriesEnabled()) {
-    <ion-item>
-      <ion-label position="stacked">Categoría</ion-label>
-      <ion-select
-        interface="popover"
-        [value]="categoryId()"
-        placeholder="Sin categoría"
-        (ionChange)="onCategoryChange($event)"
+        <ion-item lines="none" class="modern-field">
+          <ion-input
+            class="modern-input"
+            [value]="title()"
+            placeholder="Ej. Diseñar pantalla de inicio"
+            clearInput
+            (ionInput)="onTitleInput($event)"
+          />
+        </ion-item>
+
+        <p class="field-hint">Usa un título claro y corto.</p>
+      </div>
+
+      @if (categoriesEnabled()) {
+        <div class="field-group">
+          <label class="field-label">Categoría</label>
+
+          <ion-item lines="none" class="modern-field modern-field--select">
+            <ion-select
+              interface="popover"
+              class="modern-select"
+              [value]="categoryId()"
+              placeholder="Selecciona una categoría"
+              (ionChange)="onCategoryChange($event)"
+            >
+              <ion-select-option [value]="null">
+                Sin categoría
+              </ion-select-option>
+
+              @for (category of categories(); track category.id) {
+                <ion-select-option [value]="category.id">
+                  {{ category.name }}
+                </ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+        </div>
+      }
+
+      <ion-button
+        expand="block"
+        class="save-button"
+        [disabled]="!title().trim()"
+        (click)="submit()"
       >
-        <ion-select-option [value]="null">Sin categoría</ion-select-option>
-
-        @for (category of categories(); track category.id) {
-          <ion-select-option [value]="category.id">
-            {{ category.name }}
-          </ion-select-option>
-        }
-      </ion-select>
-    </ion-item>
-  }
-
-  <ion-button
-    expand="block"
-    class="ion-margin-top"
-    [disabled]="!title().trim()"
-    (click)="submit()"
-  >
-    Guardar tarea
-  </ion-button>
+        <ion-icon slot="start" name="add-circle-outline" />
+        Guardar tarea
+      </ion-button>
+    </div>
+  </div>
 </div>

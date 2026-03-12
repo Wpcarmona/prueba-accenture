@@ -1,30 +1,70 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Categorías</ion-card-title>
+<ion-card class="category-card">
+  <ion-card-header class="category-card__header">
+    <div class="category-card__title-wrap">
+      <div class="category-card__icon">
+        <ion-icon name="pricetags-outline" />
+      </div>
+
+      <div class="category-card__copy">
+        <ion-card-title>Categorías</ion-card-title>
+        <p>Administra tus categorías y organiza mejor tus tareas</p>
+      </div>
+    </div>
   </ion-card-header>
 
-  <ion-card-content>
-    @if (categories().length === 0) {
-      <p>Aún no hay categorías.</p>
-    } @else {
-      <ion-list>
-        @for (category of categories(); track category.id) {
-          <ion-item>
-            <ion-label>
+  <ion-card-content class="category-card__content">
+    <ion-list lines="none" class="category-list">
+      @for (category of categories(); track category.id) {
+        <div class="category-row">
+          <div class="category-row__main">
+            <div
+              class="category-row__dot"
+              [style.background]="category.color"
+            ></div>
+
+            <div class="category-row__info">
               <h2 [style.color]="category.color">{{ category.name }}</h2>
-              <ion-note>{{ countMap()[category.id] }} tarea(s)</ion-note>
-            </ion-label>
+              <ion-note>
+                {{ countMap()[category.id] }}
+                {{ countMap()[category.id] === 1 ? 'tarea' : 'tareas' }}
+              </ion-note>
+            </div>
+          </div>
 
-            <ion-button fill="clear" (click)="onEdit(category)">
-              Editar
+          <div class="category-row__actions">
+          
+
+            <ion-button
+              fill="clear"
+              class="action-btn action-btn--edit"
+              (click)="onEdit(category)"
+              aria-label="Editar categoría"
+            >
+             <ion-icon name="create-outline" />
             </ion-button>
 
-            <ion-button fill="clear" color="danger" (click)="onDelete(category.id)">
-              Eliminar
+            <ion-button
+              fill="clear"
+              class="action-btn action-btn--delete"
+              (click)="onDelete(category.id)"
+              aria-label="Eliminar categoría"
+            >
+              <ion-icon slot="icon-only" name="trash-outline" />
             </ion-button>
-          </ion-item>
-        }
-      </ion-list>
-    }
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <div class="empty-state__icon">
+            <ion-icon name="folder-open-outline" />
+          </div>
+
+          <h3>Aún no hay categorías</h3>
+          <p>
+            Crea una categoría para agrupar tus tareas y darles más orden.
+          </p>
+        </div>
+      }
+    </ion-list>
   </ion-card-content>
 </ion-card>

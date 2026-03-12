@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonContent,
   IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonCardContent,
   IonModal,
   IonFabButton,
@@ -35,12 +37,9 @@ import { CategoryFormModalComponent } from '../components/category-form-modal/ca
     IonFabButton,
     IonModal,
     IonCardContent,
-    IonCardTitle,
-    IonCardHeader,
     IonCard,
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonContent,
     TaskFormComponent,
     CategoryFilterComponent,

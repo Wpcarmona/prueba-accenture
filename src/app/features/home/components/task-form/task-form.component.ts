@@ -1,24 +1,37 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { Category } from '../../models/category.model';
 import {
   IonButton,
   IonItem,
-  IonLabel,
   IonInput,
   IonSelect,
-  IonSelectOption,IonButtons, IonTitle, IonToolbar, IonHeader } from '@ionic/angular/standalone';
+  IonSelectOption,
+  IonButtons,
+  IonToolbar,
+  IonHeader,
+  IonIcon,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonButtons,
+  imports: [
+    IonIcon,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
     IonInput,
-    IonLabel,
     IonItem,
     IonButton,
     IonSelect,
-    IonSelectOption
+    IonSelectOption,
   ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,

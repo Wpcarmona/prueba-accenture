@@ -1,9 +1,17 @@
-@if (tasks().length === 0) {
-  <div class="empty-state">
-    <p>No hay tareas para mostrar.</p>
-  </div>
-} @else {
-  <ion-list>
+<div class="list-shell">
+  @if (tasks().length > 0) {
+    <div class="list-header">
+      <div class="list-header__copy">
+        <h2>Mis tareas</h2>
+        <p>
+          {{ tasks().length }}
+          {{ tasks().length === 1 ? 'tarea disponible' : 'tareas disponibles' }}
+        </p>
+      </div>
+    </div>
+  }
+
+  <ion-list lines="none" class="modern-list">
     @for (task of tasks(); track task.id) {
       <app-task-item
         [task]="task"
@@ -11,6 +19,22 @@
         (toggleTask)="toggleTask.emit($event)"
         (removeTask)="removeTask.emit($event)"
       />
+    } @empty {
+      <div class="empty-state-wrap">
+        <div class="empty-state-card">
+          <div class="empty-state-icon">
+            <ion-icon name="clipboard-outline" />
+          </div>
+
+          <div class="empty-state-copy">
+            <h3>No hay tareas todavía</h3>
+            <p>
+              Cuando agregues una nueva tarea, aparecerá aquí con un diseño más
+              claro y ordenado.
+            </p>
+          </div>
+        </div>
+      </div>
     }
   </ion-list>
-}
+</div>

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input, output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { Category } from '../../models/category.model';
 import {
   IonCard,
@@ -7,19 +12,24 @@ import {
   IonCardContent,
   IonButton,
   IonList,
-  IonItem,
-  IonLabel,
   IonNote,
+  IonIcon,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import {
+  createOutline,
+  folderOpenOutline,
+  pricetagsOutline,
+  trashOutline,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-category-manager',
   templateUrl: './category-manager.component.html',
   styleUrls: ['./category-manager.component.scss'],
   imports: [
+    IonIcon,
     IonNote,
-    IonLabel,
-    IonItem,
     IonList,
     IonButton,
     IonCardContent,
@@ -35,6 +45,15 @@ export class CategoryManagerComponent {
 
   readonly editCategory = output<Category>();
   readonly deleteCategory = output<string>();
+
+  constructor() {
+    addIcons({
+      createOutline,
+      trashOutline,
+      pricetagsOutline,
+      folderOpenOutline,
+    });
+  }
 
   onEdit(category: Category): void {
     this.editCategory.emit(category);
