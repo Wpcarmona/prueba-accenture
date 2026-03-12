@@ -1,3 +1,31 @@
-<p>
-  task-item works!
-</p>
+<ion-item lines="full">
+  <ion-checkbox
+    slot="start"
+    [checked]="task().completed"
+    (ionChange)="onToggle()"
+  />
+
+  <ion-label>
+    <h2 [class.task-done]="task().completed">
+      {{ task().title }}
+    </h2>
+
+    @if (category()) {
+      <div
+        class="category-pill"
+        [style.background]="category()!.color + '22'"
+        [style.color]="category()!.color"
+      >
+        {{ category()!.name }}
+      </div>
+    }
+
+    <ion-note>
+      {{ task().completed ? "Completada" : "Pendiente" }}
+    </ion-note>
+  </ion-label>
+
+  <ion-button slot="end" fill="clear" color="danger" (click)="onRemove()">
+    Eliminar
+  </ion-button>
+</ion-item>

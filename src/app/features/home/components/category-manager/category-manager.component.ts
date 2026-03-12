@@ -1,14 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { Category } from '../../models/category.model';
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonButton,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonNote,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-category-manager',
   templateUrl: './category-manager.component.html',
   styleUrls: ['./category-manager.component.scss'],
+  imports: [
+    IonNote,
+    IonLabel,
+    IonItem,
+    IonList,
+    IonButton,
+    IonCardContent,
+    IonCardTitle,
+    IonCardHeader,
+    IonCard,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoryManagerComponent  implements OnInit {
+export class CategoryManagerComponent {
+  readonly categories = input<readonly Category[]>([]);
+  readonly countMap = input<Record<string, number>>({});
 
-  constructor() { }
+  readonly editCategory = output<Category>();
+  readonly deleteCategory = output<string>();
 
-  ngOnInit() {}
+  onEdit(category: Category): void {
+    this.editCategory.emit(category);
+  }
 
+  onDelete(categoryId: string): void {
+    this.deleteCategory.emit(categoryId);
+  }
 }

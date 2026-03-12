@@ -1,3 +1,16 @@
-<p>
-  task-list works!
-</p>
+@if (tasks().length === 0) {
+  <div class="empty-state">
+    <p>No hay tareas para mostrar.</p>
+  </div>
+} @else {
+  <ion-list>
+    @for (task of tasks(); track task.id) {
+      <app-task-item
+        [task]="task"
+        [category]="categoriesEnabled() ? resolveCategory(task) : null"
+        (toggleTask)="toggleTask.emit($event)"
+        (removeTask)="removeTask.emit($event)"
+      />
+    }
+  </ion-list>
+}
