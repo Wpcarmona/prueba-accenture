@@ -1,49 +1,207 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-
 :host {
   display: block;
 }
 
+.home-header {
+  box-shadow: none;
+}
+
+.home-toolbar {
+  --background: rgba(248, 250, 252, 0.82);
+  --border-width: 0;
+  --min-height: 104px;
+  backdrop-filter: blur(14px);
+}
+
+.header-shell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.95rem 1rem 0.9rem;
+}
+
+.header-copy {
+  min-width: 0;
+}
+
+.header-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5b5cf0;
+}
+
+.header-copy h1 {
+  margin: 0;
+  font-size: 1.22rem;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.header-copy p {
+  margin: 0.3rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+.header-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 82px;
+  min-height: 82px;
+  padding: 0.75rem;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #5b5cf0 0%, #7c3aed 100%);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.header-counter strong {
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.header-counter span {
+  margin-top: 0.28rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.92;
+}
+
 .home-content {
+  --background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
   --padding-start: 16px;
   --padding-end: 16px;
   --padding-top: 16px;
-  --padding-bottom: calc(112px + var(--ion-safe-area-bottom, 0px));
+  --padding-bottom: calc(168px + var(--ion-safe-area-bottom, 0px));
 }
 
 .page-stack {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-bottom: 12px;
+}
+
+.summary-card {
+  margin: 0;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 20px 40px rgba(15, 23, 42, 0.08),
+    0 4px 14px rgba(15, 23, 42, 0.04);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+
+.summary-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.summary-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5b5cf0;
+}
+
+.summary-head h2 {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+.summary-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.14);
+  color: #475569;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.summary-badge--active {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.summary-stat {
+  padding: 0.95rem 0.9rem;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.05),
+    0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.summary-stat__label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.summary-stat__value {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.task-list-shell {
+  padding-bottom: 32px;
 }
 
 .main-fab {
   margin-right: calc(16px + var(--ion-safe-area-right, 0px));
-  margin-bottom: calc(80px + var(--ion-safe-area-bottom, 0px));
+  margin-bottom: calc(140px + var(--ion-safe-area-bottom, 0px));
+}
+
+@media (max-width: 640px) {
+  .header-shell {
+    align-items: flex-start;
+  }
+
+  .header-counter {
+    min-width: 74px;
+    min-height: 74px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
 }

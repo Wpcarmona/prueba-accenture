@@ -1,16 +1,22 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  output,
+} from '@angular/core';
 import { Category } from '../../models/category.model';
 import { Task } from '../../models/task.model';
-import {
-  IonList,
-} from '@ionic/angular/standalone';
+import { IonList, IonIcon } from '@ionic/angular/standalone';
 import { TaskItemComponent } from '../task-item/task-item.component';
+import { addIcons } from 'ionicons';
+import { clipboardOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
-  imports: [IonList, TaskItemComponent],
+  imports: [IonIcon, IonList, TaskItemComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -21,6 +27,12 @@ export class TaskListComponent {
 
   readonly toggleTask = output<string>();
   readonly removeTask = output<string>();
+
+  constructor() {
+    addIcons({
+      clipboardOutline,
+    });
+  }
 
   readonly categoryMap = computed(() => {
     const map = new Map<string, Category>();

@@ -1,31 +1,53 @@
-<ion-item lines="full">
-  <ion-checkbox
-    slot="start"
-    [checked]="task().completed"
-    (ionChange)="onToggle()"
-  />
-
-  <ion-label>
-    <h2 [class.task-done]="task().completed">
-      {{ task().title }}
-    </h2>
-
-    @if (category()) {
-      <div
-        class="category-pill"
-        [style.background]="category()!.color + '22'"
-        [style.color]="category()!.color"
-      >
-        {{ category()!.name }}
+<ion-item-sliding class="task-sliding">
+  <ion-item-options side="end">
+    <ion-item-option
+      color="danger"
+      expandable
+      class="delete-option"
+      (click)="onRemove()"
+    >
+      <div class="delete-content">
+        <ion-icon name="trash-outline" />
+        <span>Eliminar</span>
       </div>
-    }
+    </ion-item-option>
+  </ion-item-options>
 
-    <ion-note>
-      {{ task().completed ? "Completada" : "Pendiente" }}
-    </ion-note>
-  </ion-label>
+  <ion-item
+    lines="none"
+    class="task-item"
+    [class.task-item--done]="task().completed"
+  >
+    <ion-checkbox
+      slot="start"
+      class="task-checkbox"
+      [checked]="task().completed"
+      (ionChange)="onToggle()"
+    />
 
-  <ion-button slot="end" fill="clear" color="danger" (click)="onRemove()">
-    Eliminar
-  </ion-button>
-</ion-item>
+    <ion-label class="task-content">
+      <div class="task-top-row">
+        <h2 class="task-title" [class.task-done]="task().completed">
+          {{ task().title }}
+        </h2>
+
+        <div class="task-state" [class.task-state--done]="task().completed">
+          {{ task().completed ? 'Completada' : 'Pendiente' }}
+        </div>
+      </div>
+
+      <div class="task-meta">
+        @if (category()) {
+          <div
+            class="category-pill"
+            [style.--category-bg]="category()!.color + '18'"
+            [style.--category-color]="category()!.color"
+          >
+            <span class="category-dot"></span>
+            {{ category()!.name }}
+          </div>
+        }
+      </div>
+    </ion-label>
+  </ion-item>
+</ion-item-sliding>

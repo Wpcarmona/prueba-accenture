@@ -1,15 +1,30 @@
-import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { Category } from '../../models/category.model';
 import {
-  IonItem,
-  IonLabel,
-  IonInput,
   IonButton,
   IonButtons,
-  IonTitle,
-  IonToolbar,
   IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonToolbar,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import {
+  checkmarkCircleOutline,
+  checkmarkOutline,
+  closeOutline,
+  colorPaletteOutline,
+  pricetagOutline,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-category-form-modal',
@@ -18,12 +33,11 @@ import {
   imports: [
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonButtons,
     IonButton,
     IonInput,
-    IonLabel,
     IonItem,
+    IonIcon,
   ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,7 +51,32 @@ export class CategoryFormModalComponent {
   readonly name = signal('');
   readonly color = signal('#5b8def');
 
+  readonly presetColors = [
+    '#5b5cf0',
+    '#7c3aed',
+    '#ec4899',
+    '#ef4444',
+    '#f59e0b',
+    '#10b981',
+    '#06b6d4',
+    '#3b82f6',
+  ] as const;
+
+  readonly isEdit = computed(() => !!this.category());
+
+  readonly modalTitle = computed(() =>
+    this.isEdit() ? 'Editar categoría' : 'Nueva categoría',
+  );
+
   constructor() {
+    addIcons({
+      pricetagOutline,
+      closeOutline,
+      colorPaletteOutline,
+      checkmarkOutline,
+      checkmarkCircleOutline,
+    });
+
     effect(() => {
       const current = this.category();
 
@@ -54,6 +93,10 @@ export class CategoryFormModalComponent {
   onColorInput(event: Event): void {
     const value = (event.target as HTMLInputElement | null)?.value;
     this.color.set(value || '#5b8def');
+  }
+
+  setPresetColor(color: string): void {
+    this.color.set(color);
   }
 
   submit(): void {

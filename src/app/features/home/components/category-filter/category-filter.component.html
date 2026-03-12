@@ -1,44 +1,76 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Filtros y orden</ion-card-title>
+<ion-card class="filter-card">
+  <ion-card-header class="filter-card__header">
+    <div class="filter-card__title-wrap">
+      <div class="filter-card__icon">
+        <ion-icon name="options-outline" />
+      </div>
+
+      <div class="filter-card__copy">
+        <ion-card-title>Filtros y orden</ion-card-title>
+        <p>Filtra por categoría y cambia la forma de ver tus tareas</p>
+      </div>
+    </div>
   </ion-card-header>
 
-  <ion-card-content>
-    <div class="chip-group">
-      <ion-chip
-        [outline]="selectedCategoryId() !== 'all'"
-        (click)="selectFilter('all')"
-      >
-        <ion-label>Todas ({{ countMap()['all'] }})</ion-label>
-      </ion-chip>
+  <ion-card-content class="filter-card__content">
+    <div class="section-block">
+      <div class="section-head">
+        <span class="section-title">Categorías</span>
+      </div>
 
-      <ion-chip
-        [outline]="selectedCategoryId() !== 'uncategorized'"
-        (click)="selectFilter('uncategorized')"
-      >
-        <ion-label>Sin categoría ({{ countMap()['uncategorized'] }})</ion-label>
-      </ion-chip>
-
-      @for (category of categories(); track category.id) {
+      <div class="chip-scroller">
         <ion-chip
-          [outline]="selectedCategoryId() !== category.id"
-          (click)="selectFilter(category.id)"
+          class="filter-chip"
+          [class.filter-chip--active]="selectedCategoryId() === 'all'"
+          (click)="selectFilter('all')"
         >
-          <ion-label [style.color]="category.color">
-            {{ category.name }} ({{ countMap()[category.id] }})
+          <ion-label>Todas ({{ countMap()['all'] }})</ion-label>
+        </ion-chip>
+
+        <ion-chip
+          class="filter-chip filter-chip--neutral"
+          [class.filter-chip--active]="selectedCategoryId() === 'uncategorized'"
+          (click)="selectFilter('uncategorized')"
+        >
+          <ion-label>
+            Sin categoría ({{ countMap()['uncategorized'] }})
           </ion-label>
         </ion-chip>
-      }
+
+        @for (category of categories(); track category.id) {
+          <ion-chip
+            class="filter-chip filter-chip--category"
+            [class.filter-chip--active]="selectedCategoryId() === category.id"
+            [style.--chip-accent]="category.color"
+            (click)="selectFilter(category.id)"
+          >
+            <span class="chip-dot"></span>
+            <ion-label>
+              {{ category.name }} ({{ countMap()[category.id] }})
+            </ion-label>
+          </ion-chip>
+        }
+      </div>
     </div>
 
-    <ion-segment class="ion-margin-top" [value]="sortBy()" (ionChange)="onSortChange($event)">
-      <ion-segment-button value="recent">
-        <ion-label>Recientes</ion-label>
-      </ion-segment-button>
+    <div class="section-block section-block--sort">
+      <div class="section-head">
+        <span class="section-title">Orden</span>
+      </div>
 
-      <ion-segment-button value="completed">
-        <ion-label>Completadas</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+      <ion-segment
+        class="modern-segment"
+        [value]="sortBy()"
+        (ionChange)="onSortChange($event)"
+      >
+        <ion-segment-button value="recent" class="modern-segment__button">
+          <ion-label>Recientes</ion-label>
+        </ion-segment-button>
+
+        <ion-segment-button value="completed" class="modern-segment__button">
+          <ion-label>Completadas</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
   </ion-card-content>
 </ion-card>
